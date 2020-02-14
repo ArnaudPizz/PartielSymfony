@@ -3,6 +3,7 @@ function connection ($db){
 session_start();
 if(isset($_POST['login']) && isset($_POST['password']))
 {
+    //Recupération des infos de la BDD
     $db=mysqli_connect("localhost","root","","partiel");
 
     // Check connection
@@ -13,6 +14,7 @@ if(isset($_POST['login']) && isset($_POST['password']))
     $login = ($_POST['login']); 
     $password = ($_POST['password']);
     
+    //condition
     if($login !== "" && $password !== "")
     {
         $requete = "SELECT count(*) FROM partiel where 
@@ -22,12 +24,12 @@ if(isset($_POST['login']) && isset($_POST['password']))
 
 
         $count = $reponse['count(*)'];
-        if($count!=0)
+        if($count!=0)// si ok alors affichage de index
         {
            $_SESSION['login'] = $login;
            header('Location: /index.php');
         }
-        else
+        else // sinon affichage d'une page précisant que le login est erroné
         {
            header('Location: /badlogin.php'); //Page de badlogin
         }
